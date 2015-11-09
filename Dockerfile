@@ -8,15 +8,16 @@ LABEL io.k8s.description="Nginx Container for proxypass to uwsgi app" \
       io.k8s.display-name="Nginx" \
       io.openshift.expose-services="5000:http" \
       io.openshift.tags="builder,nginx"
-# forward request and error logs to docker log collector
-RUN ln -sf /dev/stdout /var/log/nginx/access.log
-RUN ln -sf /dev/stderr /var/log/nginx/error.log
+
 COPY ./configs/nginx.conf.template /opt/templates/nginx.conf.template
 COPY ./configs/vhost.conf.template /opt/templates/vhost.conf.template
 COPY ./scripts/entrypoint /entrypoint
 RUN yum clean all -y
 
-VOLUME ["/var/cache/nginx"]
+#RUN ln -sf /dev/stdout /var/log/nginx/access.log
+#RUN ln -sf /dev/stderr /var/log/nginx/error.log
 
-EXPOSE 80 443 5000
+RUN chmod -R 777 /var/log/nginx /var/lib/nginx /etc/nginx /var/run
+
+EXPOSE 5000
 ENTRYPOINT "/entrypoint"
