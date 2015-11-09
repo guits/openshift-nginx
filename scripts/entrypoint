@@ -1,0 +1,13 @@
+#!/bin/sh
+
+[ -z $NGINX_WORKER_PROCESSES ] && NGINX_WORKER_PROCESSES=auto
+[ -z $NGINX_WORKER_CONNECTIONS ] && NGINX_WORKER_CONNECTIONS=1024
+[ -z $NGINX_KEEPALIVE_TIMEOUT ] && NGINX_KEEPALIVE_TIMEOUT=1
+[ -z $NGINX_DEFAULT_PORT ] && NGINX_DEFAULT_PORT=5000
+[ -z $NGINX_APP_NAME ] && NGINX_APP_NAME=pastefile
+[ -z $NGINX_UWSGI_HOST ] && NGINX_UWSGI_HOST=127.0.0.1
+[ -z $NGINX_UWSGI_PORT ] && NGINX_UWSGI_PORT=9000
+
+envsubst '$NGINX_WORKER_PROCESSES $NGINX_WORKER_CONNECTIONS $NGINX_KEEPALIVE_TIMEOUT' < /opt/templates/nginx.conf.template > /etc/nginx/nginx.conf
+envsubst '$NGINX_DEFAULT_PORT $NGINX_APP_NAME $NGINX_UWSGI_HOST $NGINX_UWSGI_PORT' < /opt/templates/vhost.conf.template > /etc/nginx/conf.d/vhost.conf
+nginx -g "daemon off;"
