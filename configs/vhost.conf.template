@@ -6,6 +6,6 @@ server {
 
         location @${NGINX_APP_NAME} {
             include uwsgi_params;
-            uwsgi_pass ${PASTEFILE_APP_PORT_9000_TCP_ADDR}:${PASTEFILE_APP_PORT_9000_TCP_PORT};
+            uwsgi_pass ${OPENSHIFT_S2I_PASTEFILE_PORT_9000_TCP_ADDR}:${OPENSHIFT_S2I_PASTEFILE_PORT_9000_TCP_PORT};
         }
 }
