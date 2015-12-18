@@ -9,5 +9,5 @@
 [ -z $NGINX_UWSGI_PORT ] && export NGINX_UWSGI_PORT=9000
 
 envsubst '$NGINX_WORKER_PROCESSES $NGINX_WORKER_CONNECTIONS $NGINX_KEEPALIVE_TIMEOUT' < /opt/templates/nginx.conf.template > /etc/nginx/nginx.conf
-envsubst '$NGINX_DEFAULT_PORT $NGINX_APP_NAME $NGINX_UWSGI_HOST $NGINX_UWSGI_PORT $PASTEFILE_APP_PORT_9000_TCP_ADDR $PASTEFILE_APP_PORT_9000_TCP_PORT' < /opt/templates/vhost.conf.template > /etc/nginx/conf.d/vhost.conf
+envsubst '$NGINX_DEFAULT_PORT $NGINX_APP_NAME $NGINX_UWSGI_HOST $NGINX_UWSGI_PORT $OPENSHIFT_S2I_PASTEFILE_PORT_9000_TCP_ADDR $OPENSHIFT_S2I_PASTEFILE_PORT_9000_TCP_PORT' < /opt/templates/vhost.conf.template > /etc/nginx/conf.d/vhost.conf
 nginx -g "daemon off;"
