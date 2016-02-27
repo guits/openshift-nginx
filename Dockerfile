@@ -4,9 +4,9 @@ MAINTAINER Guillaume Abrioux "guillaume@abrioux.info"
 
 RUN yum install -y nginx
 
-LABEL io.k8s.description="Nginx Container for proxypass to uwsgi app" \
+LABEL io.k8s.description="Nginx frontend for pastefile" \
       io.k8s.display-name="Nginx" \
-      io.openshift.expose-services="5000:http" \
+      io.openshift.expose-services="8080:http" \
       io.openshift.tags="builder,nginx"
 
 COPY ./configs/nginx.conf.template /opt/templates/nginx.conf.template
@@ -19,5 +19,5 @@ RUN yum clean all -y
 
 RUN chmod -R 777 /var/log/nginx /var/lib/nginx /etc/nginx /var/run
 
-EXPOSE 5000
+EXPOSE 8080
 ENTRYPOINT "/entrypoint"
